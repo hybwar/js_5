@@ -2,7 +2,7 @@ const API = 'https://raw.githubusercontent.com/hybwar/js_1/main';
 const app = new Vue({
     el: '#app',
     data: {
-         imgCatalog: './img/picture.jpg',
+        imgCatalog: './img/picture.jpg',
         imgCart: './img/picture.jpg',
         catalogUrl: '/data4.json',
         basketUrl: '/basket.json',
@@ -26,7 +26,7 @@ const app = new Vue({
                 })
         },
         filterGoods(pattern) {
-    
+
             const re = new RegExp(pattern, 'i');
             this.filtered = this.products.filter(product => re.test(product.product_name));
             this.products.forEach(item => {
@@ -39,14 +39,14 @@ const app = new Vue({
             })
         },
 
-        getJson(url){
+        getJson(url) {
             return fetch(url)
                 .then(result => result.json())
                 .catch(error => {
                     console.log(error);
                 })
         },
-        addProduct(product){
+        addProduct(product) {
             console.log(product.id_product);
             this.getJson(`${API}/addToBasket.json`)
                 .then(data => {
@@ -55,7 +55,9 @@ const app = new Vue({
                         if (found) {
                             found.quantity++;
                         } else {
-                            let item = Object.assign({quantity: 1}, product);
+                            let item = Object.assign({
+                                quantity: 1
+                            }, product);
                             this.cartContents.push(item);
                         }
                     }
@@ -67,14 +69,14 @@ const app = new Vue({
         console.log('created');
         this.getJson(`${API + this.catalogUrl}`)
             .then(data => {
-                for(let item of data){
+                for (let item of data) {
                     this.products.push(item);
                 }
                 this.filtered = [...this.products];
             });
         this.getJson(`${API + this.basketUrl}`)
             .then(data => {
-                for(let item of data.contents){
+                for (let item of data.contents) {
                     this.cartContents.push(item);
                 }
             });
