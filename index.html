@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Интернет-магазин</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <header class="header_top">
+
+                <div class="header_logo">
+                    <a href="#"><span>H-shop</span></a>
+                </div>
+
+                <div class="cart">
+
+                    <form action="#" class="search-form">
+                        <input type="text" class="search-field" v-model="searchLine">
+                        <button class="btn-search" type="submit" @click="filterGoods(searchLine)">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+
+                    <button class="btn-cart" type="button" @click="isVisibleCart = !isVisibleCart">Корзина</button>
+
+                    <div class="cart-block" :class="{invisible: isVisibleCart}">
+                        <div class="cart-item" v-for="item of cartContents" :data-id="item.id_product"
+                            :key="item.id_product">
+                            <div class="product-bio">
+                                <img :src="imgCart" alt="picture">
+                                <div class="product-desc">
+                                    <p class="product-title">{{ item.product_name }}</p>
+                                    <p class="product-quantity">Кол-во: {{ item.quantity }}</p>
+                                    <p class="product-single-price">{{ item.price }} за ед.</p>
+                                </div>
+                            </div>
+                            <div class="right-block">
+                                <p class="product-price">{{ item.quantity * item.price }} rub.</p>
+                                <button class="del-btn" :data-id="item.id_product"
+                                    @click="removeProduct(item)">&times;</button>
+                            </div>
+                        </div>
+                        <p v-if="!cartContents.length" class="cartEmpity">В корзине нет товаров</p>
+                    </div>
+                </div>
+            </header>
+            <main>
+                <div class="products">
+                    <div class="product-item" v-for="product of products" :data-id="product.id_product"
+                        :key="product.id_product">
+                        <img :src="imgCatalog" alt="Some img">
+                        <div class="desc">
+                            <h3>{{product.product_name}}</h3>
+                            <p>{{product.price}} rub.</p>
+                            <button class="buy-btn" @click="addProduct(product)">Купить</button>
+                        </div>
+                    </div>
+                    <p v-if="!filtered.length">База данных не доступна! Мы уже работаем над этим.</p>
+                </div>
+            </main>
+        </div>
+
+        <div>
+
+            <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+                integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+            <script src="js/main.js"></script>
+</body>
+
+</html>
